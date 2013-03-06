@@ -129,6 +129,13 @@ def new():
 		import dionaea.submit_http
 		g_handlers.append(dionaea.submit_http.handler('*'))
 
+	if "hpfeeds" in g_dionaea.config()['modules']['python']['ihandlers']['handlers'] and 'hpfeeds' in g_dionaea.config()['modules']['python']:
+		import dionaea.hpfeeds
+		for client in g_dionaea.config()['modules']['python']['hpfeeds']:
+			conf = g_dionaea.config()['modules']['python']['hpfeeds'][client]
+			x = dionaea.hpfeeds.hpfeedihandler(conf)
+			g_handlers.append(x)
+
 	if "fail2ban" in g_dionaea.config()['modules']['python']['ihandlers']['handlers']:
 		import dionaea.fail2ban
 		g_handlers.append(dionaea.fail2ban.fail2banhandler())
